@@ -2,7 +2,6 @@
 # Author : MedericCossu
 
 $loop = "True"
-$adbDeviceAddress = "127.0.0.1:$(Get-NetTCPConnection -OwningProcess $(get-process -Name "HD-Player" |select -expand id -First 1) -LocalAddress 127.0.0.1 | select -expand LocalPort -First 1)"
 
 function Connect-adb{
     $adbDeviceAddress = "127.0.0.1:$(Get-NetTCPConnection -OwningProcess $(get-process -Name "HD-Player" |select -expand id -First 1) -LocalAddress 127.0.0.1 | select -expand LocalPort -First 1)"
@@ -20,6 +19,7 @@ function Start-BlueStacks{
 while($loop -eq "True")
 {
     Start-BlueStacks
+    $adbDeviceAddress = "127.0.0.1:$(Get-NetTCPConnection -OwningProcess $(get-process -Name "HD-Player" |select -expand id -First 1) -LocalAddress 127.0.0.1 | select -expand LocalPort -First 1)"
     Connect-adb
     $appVsize = .\HD-Adb.exe -s $adbDeviceAddress shell ps $(.\HD-Adb.exe -s $adbDeviceAddress shell pidof -s com.kakaogames.gdts) | ForEach-Object{($_ -split "\s+")[3]} | select -Last 1
 
