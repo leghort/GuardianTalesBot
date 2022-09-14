@@ -8,7 +8,6 @@ function Connect-adb{
     cd "C:\Program Files\BlueStacks_nxt"
     ./HD-Adb.exe disconnect
     ./HD-Adb.exe connect $adbDeviceAddress
-    Start-Sleep -Seconds 1
 }
 
 function Start-BlueStacks{
@@ -23,16 +22,23 @@ while($loop -eq "True")
     Connect-adb
     $appVsize = .\HD-Adb.exe -s $adbDeviceAddress shell ps $(.\HD-Adb.exe -s $adbDeviceAddress shell pidof -s com.kakaogames.gdts) | ForEach-Object{($_ -split "\s+")[3]} | select -Last 1
 
-    If($appVsize -lt "2500000")
+    If($appVsize -le "2500000")
     {
+        echo "if"
         Stop-Process -Name "HD-Player"
         Start-BlueStacks
         Connect-adb
+        Start-Sleep -Seconds 1
+        $appVsize = .\HD-Adb.exe -s $adbDeviceAddress shell ps $(.\HD-Adb.exe -s $adbDeviceAddress shell pidof -s com.kakaogames.gdts) | ForEach-Object{($_ -split "\s+")[3]} | select -Last 1
+    }
+    elseif($appVsize -ge "2500000"){
+        echo "elseif"
+        $loop = "False"
     }
     else
     {
-        $loop = "False"
+        echo "else"
+        $appVsize = .\HD-Adb.exe -s $adbDeviceAddress shell ps $(.\HD-Adb.exe -s $adbDeviceAddress shell pidof -s com.kakaogames.gdts) | ForEach-Object{($_ -split "\s+")[3]} | select -Last 1
     }
-    exit
 }
-Start-Sleep -Seconds 10
+exit
