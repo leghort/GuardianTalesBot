@@ -17,34 +17,38 @@ class adb {
 function Connect-adb{
     $AdbClass = New-Object -TypeName adb
     cd "C:\Program Files\BlueStacks_nxt"
-    ./HD-Adb.exe disconnect
+    ./HD-Adb.exe disconnect -out-null
     ./HD-Adb.exe connect $AdbClass.return_adbDeviceAddress()
     Start-Sleep -Seconds 1
 }
 
 function Start-BlueStacks{
     if((get-process "HD-Player" -ea SilentlyContinue) -eq $Null){ 
-        echo "BlueStack Not Running"
         echo "Start BlueStacks..."
         Start "C:\Program Files\BlueStacks_nxt\HD-Player.exe" -ArgumentList '--instance Nougat32_1 --cmd launchApp --package "com.kakaogames.gdts"'
+        Start-Sleep -Seconds 30
+    }
+    else{
+        echo "BlueStack is running"
+        Start-Sleep -Seconds 1
     }
 }
 
 # Init var
 $loop = "True"
 $ErrorActionPreference = "SilentlyContinue"
-$adbDeviceAddress = 0
-$appVsize = 0
 $AdbClass = New-Object -TypeName adb
 
 while($loop -eq "True")
 {
+    echo ""
     Start-BlueStacks
-    Start-Sleep -Seconds 30
     Connect-adb
+    echo "GuardiansTailesVsize : $($AdbClass.return_appVsize())"
     if($AdbClass.return_appVsize() -le 2500000){ 
         echo "GuardiansTailes fail running"
         Stop-Process -Name "HD-Player"
+        Start-Sleep -Seconds 2
     }
     elseif($AdbClass.return_appVsize() -ge 2500000){ 
         echo "Guardians is running"
