@@ -15,7 +15,7 @@ GuardianTalesBot restarts BlueStacks automatically after a crash.<br />
 - GuadianTales app powered by BlueStacks
 - ADB in BlueStacks enabled
 <div align="center">
-<img src="./.assets/enableADB.png" width="80%;">
+<img src="./.assets/enableADB.png" width="100%;">
 </div>
 
 ## Python source code
