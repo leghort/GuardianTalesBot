@@ -3,7 +3,7 @@
 
 > GuadiantTalesBot restart you crashed GuardianTales powered by BlueStacks automatically
 
-## What is that ?
+## What is this ?
 On Windows Guadiant Tales powered by BlueStacks regularly crash<br />
 GuardianTalesBot restarts BlueStacks automatically after a crash.<br />
 
