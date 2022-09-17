@@ -52,6 +52,7 @@ while($loop -eq "True")
     }
     elseif($AdbClass.return_appVsize() -ge 2500000){ 
         echo "Guardians is running"
+        $loop = "False"
     }
 }
 exit
