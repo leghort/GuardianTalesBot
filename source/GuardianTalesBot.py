@@ -1,36 +1,118 @@
+import os
+import time
 import psutil
 import easyocr
 from adbutils import adb
 
-# Get the precess id by process name
+deviceAddress = "127.0.0.1:5555"
 def get_pid(processName):
     for i in psutil.process_iter():
         if processName in i.name():
             processPid = i.pid
     return processPid
-
-# Connect a device by adb and seen commande
 def shell_adb(deviceAddress, commande):
     adb.connect(deviceAddress)
     return (adb.device(serial=deviceAddress).shell(commande))
+def adb_find_app(deviceAddress, app):
+    appFound = 0
+    for i in range(0, len(adb.device(serial=deviceAddress).list_packages())):
+        if adb.device(serial=deviceAddress).list_packages()[i] == app:
+            appFound = 1
+    return appFound
+def adb_tap_string(string):
+    time.sleep(1)
+    adb.connect(deviceAddress)
+    adb.device(serial=deviceAddress).shell("screencap -p /sdcard/.screencap.png")
+    adb.device(serial=deviceAddress).sync.pull("/sdcard/.screencap.png", ".screencap.png")
+    adb_tap_string.reader = easyocr.Reader(['fr']).readtext(".screencap.png")
+    strMatchList = []
+    for i in range(0, len(adb_tap_string.reader)):
+        if adb_tap_string.reader[i][1] == string:
+            strMatchList.append(adb_tap_string.reader[i][0][0])
+    os.remove(".screencap.png")
+    stringCordonate = strMatchList[0]
+    adb.device(serial=deviceAddress).click(stringCordonate[0], stringCordonate[1])
+    return ()
 
-# Find text in picture
-def ocr(file, string):
-    reader = easyocr.Reader(['fr'])
-    result = reader.readtext(file)
-    print(result)
-    str_match = list(filter(lambda x: string in x, result))
-    return str_match
+def collisee_V2():
+    adb_tap_string("Aventure")
+    time.sleep(4)
+    adb_tap_string("Colisée")
+    time.sleep(4)
+    adb_tap_string("Début bataille")
+    time.sleep(4)
+    adb_tap_string("Début bataille")
+    time.sleep(60)
+    adb_tap_string("Confirmer")
+    time.sleep(4)
+    adb_tap_string("Confirmer")
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(50, 50)
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(50, 50)
 
-def find_string_coordinates(string):
-    list1 = [([[96, 24], [194, 24], [194, 56], [96, 56]], 'Colisée', 0.9999287192014178), ([[219, 31], [235, 31], [235, 53], [219, 53]], '2', 0.9345665444414841), ([[804, 28], [872, 28], [872, 52], [804, 52]], '42/75', 0.9998103670402473), ([[1020, 26], [1114, 26], [1114, 54], [1020, 54]], '7034830', 0.9997078374329774), ([[1254, 26], [1322, 26], [1322, 52], [1254, 52]], '52144', 0.8935663030977704), ([[688, 56], [742, 56], [742, 80], [688, 80]], '01*56', 0.7496632166037968), ([[600, 128], [660, 128], [660, 160], [600, 160]], '600', 0.998236554619606), ([[1049, 129], [1300, 129], [1300, 156], [1049, 156]], 'Temps de saison restant:', 0.9977163107124501), ([[1310, 130], [1494, 130], [1494, 156], [1310, 156]], 'jour(s) 17 heure(s)', 0.7981060653691189), ([[640, 169], [735, 169], [735, 202], [640, 202]], 'Medaey', 0.9997329562190878), ([[1057, 177], [1192, 177], [1192, 204], [1057, 204]], 'GAGNER : 26', 0.8177750479455042), ([[1356, 180], [1482, 180], [1482, 204], [1356, 204]], 'PERDRE : 32', 0.6812407964286065), ([[642, 202], [736, 202], [736, 226], [642, 226]], 'Piraterie', 0.9999551768048455), ([[465, 261], [505, 261], [505, 281], [465, 281]], 'DPS', 0.998553015045409), ([[646, 258], [732, 258], [732, 284], [646, 284]], '119205', 0.9999454439712393), ([[1082, 254], [1166, 254], [1166, 280], [1082, 280]], 'Helster', 0.9999755790767648), ([[1176, 254], [1258, 254], [1258, 280], [1176, 280]], 'Niv. 300', 0.7468517143540958), ([[1414, 268], [1462, 268], [1462, 298], [1414, 298]], '640', 0.9998552613445008), ([[463, 295], [533, 295], [533, 315], [463, 315]], 'Dureté', 0.9998104867100466), ([[644, 290], [732, 290], [732, 316], [644, 316]], '858013', 0.7197690201283087), ([[1080, 286], [1194, 286], [1194, 312], [1080, 312]], 'Astrolabos', 0.9999858257615883), ([[31, 340], [161, 340], [161, 383], [31, 383]], 'Boutique', 0.999988662471129), ([[1032, 420], [1076, 420], [1076, 444], [1032, 444]], 'DPS', 0.9961353480570221), ([[1216, 420], [1302, 420], [1302, 446], [1216, 446]], '372172', 0.9999763477806435), ([[1380, 416], [1480, 416], [1480, 440], [1380, 440]], 'Retenter', 0.9999967125435779), ([[1033, 457], [1103, 457], [1103, 477], [1033, 477]], 'Dureté', 0.9815704921100231), ([[1202, 452], [1302, 452], [1302, 478], [1202, 478]], '1779804', 0.9984071664452339), ([[2, 504], [191, 504], [191, 542], [2, 542]], 'Récompenses', 0.9936967884240212), ([[1082, 518], [1142, 518], [1142, 544], [1082, 544]], 'Mala', 0.9999845623970032), ([[1150, 520], [1232, 520], [1232, 544], [1150, 544]], 'Niv. 149', 0.5705291906939595), ([[302, 544], [366, 544], [366, 570], [302, 570]], '1114', 0.04165639728307724), ([[1484, 534], [1532, 534], [1532, 562], [1484, 562]], '590', 0.9994003772735596), ([[1078, 548], [1172, 548], [1172, 580], [1078, 580]], 'polskao1', 0.5837469948240008), ([[282, 572], [402, 572], [402, 598], [282, 598]], 'Nia 72/72', 0.6191798770087988), ([[446, 572], [566, 572], [566, 598], [446, 598]], 'Niva 75/75', 0.6407534792085942), ([[612, 572], [732, 572], [732, 598], [612, 598]], 'Niva 75/75', 0.5520279249621192), ([[776, 572], [898, 572], [898, 600], [776, 600]], 'Niva 72/72', 0.5568352199020692), ([[462, 654], [702, 654], [702, 684], [462, 684]], 'Régler sur Parti défense', 0.8152474905113006), ([[18, 666], [174, 666], [174, 696], [18, 696]], 'Classement', 0.9999305601956445), ([[1033, 687], [1075, 687], [1075, 707], [1033, 707]], 'DPS', 0.9842215281692508), ([[1214, 684], [1302, 684], [1302, 710], [1214, 710]], '135285', 0.9236714790001009), ([[1351, 679], [1512, 679], [1512, 708], [1351, 708]], 'Début bataille', 0.9980932491740347), ([[1032, 720], [1104, 720], [1104, 744], [1032, 744]], 'Dureté', 0.9958844200568513), ([[1214, 716], [1300, 716], [1300, 742], [1214, 742]], '859237', 0.9999925205495025), ([[352, 792], [376, 792], [376, 822], [352, 822]], '1', 0.999924661148043), ([[480, 791], [690, 791], [690, 822], [480, 822]], 'Réglages de position', 0.9913890731053213), ([[1068, 798], [1122, 798], [1122, 826], [1068, 826]], '0/5', 0.9998507877740953), ([[1136, 800], [1300, 800], [1300, 824], [1136, 824]], '19m 55s restante(s)', 0.8620866904132232), ([[48, 812], [146, 812], [146, 840], [48, 840]], 'Dossier', 0.9999858971656087), ([[43, 838], [147, 838], [147, 870], [43, 870]], 'bataille', 0.9998083928228094)]
-    for i in range(len(list1)):
-        for y in range(len(list1[i])):
-            if(type(list1[i][y]) is str):
-                if (list1[i][y] == string):
-                    return (f'{list1[i][1]}  {list1[i + 1][0][0]}')
 
-#print (get_pid("HD-Player"))
-#print (shell_adb("127.0.0.1:5555","ls"))
-#print (ocr("../.assets/screentest1.png","DPS"))
-print(find_string_coordinates("Retenter"))
+
+
+def guilde_V1():
+    adb_tap_string("Guilde")
+    time.sleep(2)
+    adb_tap_string("Confirmer")
+    time.sleep(4)
+    adb.device(serial=deviceAddress).swipe(287, 724, 282, 620, 0.5)
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(1724, 880)
+    time.sleep(2)
+    adb_tap_string("Recevoir")
+    time.sleep(2)
+    adb_tap_string("Confirmer")
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(1862, 50)
+    time.sleep(1)
+    adb.device(serial=deviceAddress).click(1862, 50)
+    time.sleep(2)
+    adb_tap_string("Confirmer")
+    return ()
+
+def dailyV1():
+    guilde_V1()
+    time.sleep(2)
+    donjon()
+    donjon()
+    donjon()
+    getQuestReword()
+
+
+def getQuestReword():
+    adb.device(serial=deviceAddress).click(575, 969)
+    time.sleep(1)
+    list = ["Quotidienne", "Défi", "Événement"]
+    for i in range (0, (len(list))):
+        adb_tap_string(list[i])
+        adb_tap_string("Tout recevoir")
+
+    time.sleep(1)
+    adb.device(serial=deviceAddress).click(50, 50)
+
+def donjon():
+    adb_tap_string("Aventure")
+    adb_tap_string("Faille")
+    adb_tap_string("Donjon d'éveil")
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(1389, 964)
+    time.sleep(60)
+    adb_tap_string("Sortie")
+    time.sleep(8)
+    adb_tap_string("Confirmer")
+    adb.device(serial=deviceAddress).click(50, 50)
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(50, 50)
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(50, 50)
+    time.sleep(2)
+
+
+loop = "true"
+while loop == "true":
+    collisee_V2()
+    time.sleep(7200)
