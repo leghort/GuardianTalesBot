@@ -50,15 +50,11 @@ def collisee_V2():
     adb.device(serial=deviceAddress).click(50, 50)
     time.sleep(2)
     adb.device(serial=deviceAddress).click(50, 50)
-
-
-
-
 def guilde_V1():
     adb_tap_string("Guilde")
     time.sleep(2)
     adb_tap_string("Confirmer")
-    time.sleep(4)
+    time.sleep(9)
     adb.device(serial=deviceAddress).swipe(287, 724, 282, 620, 0.5)
     time.sleep(2)
     adb.device(serial=deviceAddress).click(1724, 880)
@@ -76,7 +72,7 @@ def guilde_V1():
 
 def dailyV1():
     guilde_V1()
-    time.sleep(2)
+    time.sleep(4)
     donjon()
     donjon()
     donjon()
@@ -90,13 +86,16 @@ def getQuestReword():
     for i in range (0, (len(list))):
         adb_tap_string(list[i])
         adb_tap_string("Tout recevoir")
-
+        time.sleep(2)
+        adb_tap_string("Confirmer")
     time.sleep(1)
     adb.device(serial=deviceAddress).click(50, 50)
 
 def donjon():
     adb_tap_string("Aventure")
+    time.sleep(2)
     adb_tap_string("Faille")
+    time.sleep(2)
     adb_tap_string("Donjon d'éveil")
     time.sleep(2)
     adb.device(serial=deviceAddress).click(1389, 964)
@@ -111,8 +110,29 @@ def donjon():
     adb.device(serial=deviceAddress).click(50, 50)
     time.sleep(2)
 
+def boutique():
+    adb_tap_string("Menu")
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(905, 441)
+    time.sleep(2)
+    adb_tap_string("Ressource")
+    time.sleep(2)
+    adb_tap_string("Gratuit")
+    time.sleep(2)
+    adb_tap_string("Gratuit")
+    time.sleep(2)
+    adb_tap_string("Confirmer")
+    time.sleep(2)
+    adb_tap_string("Équipement")
+    time.sleep(2)
+    adb_tap_string("Marteau consolidateur")
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(1132, 858)
+    time.sleep(2)
+    adb_tap_string("Confirmer")
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(50, 50)
+    time.sleep(2)
+    adb.device(serial=deviceAddress).click(630, 443)
+    time.sleep(2)
 
-loop = "true"
-while loop == "true":
-    collisee_V2()
-    time.sleep(7200)
