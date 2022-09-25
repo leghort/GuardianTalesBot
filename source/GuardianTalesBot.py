@@ -3,9 +3,11 @@ import time
 import psutil
 import easyocr
 from adbutils import adb
-import HomePage
-import RiftPage
-import WorldMapPage
+import model.ColosseumPage
+import model.HomePage
+import model.RiftPage
+import model.WorldMapPage
+
 
 deviceAddress = "127.0.0.1:5555"
 def get_pid(processName):
