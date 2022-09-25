@@ -13,8 +13,6 @@ buttonSummons = [1777, 900]
 buttonMenu = [1820, 440]
 buttonMenuReduce = [632, 440]
 
-
-
 class Menu:
     buttonForum = [766, 440]
     buttonShop = [909, 440]

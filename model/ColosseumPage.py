@@ -11,8 +11,6 @@ buttonBattleRecord = [120, 950]
 buttonBattleStartPlayer1 = [1700, 490]
 buttonBattleStartPlayer2 = [1700, 800]
 buttonSwapPlayers = [1836, 976]
-buttonSwapPlayersConfim = [1131, 815]
-buttonSwapPlayersCancel = [812, 815]
 buttonSwapPlayer1 = [1808, 334]
 buttonSwapPlayer2 = [1808, 655]
 
@@ -22,5 +20,7 @@ class BattleStart:
     buttonCancel = [780, 962]
 class BattleResul:
     buttonConfirm = [965, 969]
-
+class SwapPlayers:
+    buttonSwapPlayersConfim = [1131, 815]
+    buttonSwapPlayersCancel = [812, 815]
 

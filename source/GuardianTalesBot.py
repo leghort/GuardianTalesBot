@@ -7,6 +7,7 @@ import model.ColosseumPage
 import model.HomePage
 import model.RiftPage
 import model.WorldMapPage
+import model.Achievements
 
 
 deviceAddress = "127.0.0.1:5555"
@@ -164,5 +165,3 @@ def daily_V2():
     for i in range(3):
         donjon()
     getQuestReword()
-
-adb_tap(model.ColosseumPage.buttonSwapPlayersConfim)
