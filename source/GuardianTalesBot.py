@@ -3,14 +3,23 @@ import time
 import psutil
 import easyocr
 from adbutils import adb
+
+import model.Achievements
 import model.ColosseumPage
 import model.HomePage
 import model.RiftPage
 import model.WorldMapPage
-import model.Achievements
+import model.CommonWorkflow
 
+Common = model.CommonWorkflow
+Achievements= model.Achievements
+ColosseumPage= model.ColosseumPage
+HomePage= model.HomePage
+RiftPage= model.RiftPage
+WorldMapPage= model.WorldMapPage
 
 deviceAddress = "127.0.0.1:5555"
+
 def get_pid(processName):
     for i in psutil.process_iter():
         if processName in i.name():
@@ -165,3 +174,5 @@ def daily_V2():
     for i in range(3):
         donjon()
     getQuestReword()
+
+print(ColosseumPage.opponent1())
