@@ -161,4 +161,4 @@ def daily_V2():
         donjon()
     getQuestReword()
 
-
+adb_tap(HomePage.buttonMenu)
