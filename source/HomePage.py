@@ -1,15 +1,19 @@
-buttonHero = [150, 700]
-buttonAventure = [150, 900]
-buttonGuilde = [1777, 700]
-buttonSummons = [1777, 900]
-buttonMenu = [1820, 440]
-buttonMenuReduce = [632, 440]
-buttonGuardianAvatar = [177, 60]
+buttonGuardianAvatar = [50, 50]
 buttonStamina = [860, 50]
 buttonGoldCoins = [1150, 50]
 buttonGem = [1430, 50]
 buttonAchivements = [580, 970]
 buttonEvent = [1640, 260]
+
+buttonHero = [150, 700]
+buttonAventure = [150, 900]
+buttonGuilde = [1777, 700]
+buttonSummons = [1777, 900]
+
+buttonMenu = [1820, 440]
+buttonMenuReduce = [632, 440]
+
+
 
 class Menu:
     buttonForum = [766, 440]
