@@ -1,64 +1,87 @@
 import os
-import CommonWorkflow
+import time
+
+import model.CommonWorkflow
 from PIL import Image
 import easyocr
 from adbutils import adb
 
 deviceAddress = "127.0.0.1:5555"
+buttonBattleOpponent1 = 88, 45
+buttonSwapOpponent1 = 94, 31
+buttonSwapOpponent2 = 94, 60
+buttonBattleOpponent2 = 88, 74
+buttonBattleStart = 76, 89
+buttonBattleCancel = 49, 89
+buttonEndBattleConfirmRank = 50, 75
+buttonEndBattleConfirm = 50, 89
 
-buttonBack = [50, 50]
-buttonStamina = [860, 50]
-buttonGoldCoins = [1150, 50]
-buttonGem = [1430, 50]
 
-buttonShop = [120, 370]
-buttonReward = [120, 565]
-buttonRanking = [120, 762]
-buttonBattleRecord = [120, 950]
-
-buttonBattleStartPlayer1 = [1700, 490]
-buttonBattleStartPlayer2 = [1700, 800]
-buttonSwapPlayers = [1836, 976]
-buttonSwapPlayer1 = [1808, 334]
-buttonSwapPlayer2 = [1808, 655]
-
-buttonConfirmGetEventPoints = [969, 811]
-
-class BattleStart:
-    buttonBattleStart = [1200, 962]
-    buttonCancel = [780, 962]
-class BattleResul:
-    buttonConfirm = [965, 969]
-class SwapPlayers:
-    buttonSwapPlayersConfim = [1131, 815]
-    buttonSwapPlayersCancel = [812, 815]
-def opponent1():
-    img = ".opponent1.png"
+def ocrCropGetString(left: float, upper: float, right: float, bottom: float, deviceAddress: str = '127.0.0.1:5555'):
+    img = ".ocrCrop.png"
     adb.connect(deviceAddress)
     adb.device(serial=deviceAddress).screenshot().save(img)
     width, height = Image.open(img).size
     imCrop = Image.open(img).crop(
-        (int(width * 0.62), int(height * 0.37), int(width * 0.82), int(height * 0.54)))
+        (int(width * left), int(height * upper), int(width * right), int(height * bottom)))
     imCrop.save(img)
     ocrStringsFound = easyocr.Reader(['fr']).readtext(img, detail=0)
     os.remove(img)
-    return (ocrStringsFound)
+    if ocrStringsFound != None:
+        return (ocrStringsFound)
+    elif ocrStringsFound == None:
+        return ("No string found")
+    else:
+        return ("Error: ocrCropGetString fonction")
+def click(button):
+    x, y = button[0], button[1]
+    print(x, y)
+    if x != 0 and y !=0:
+        img = ".ocrCrop.png"
+        adb.connect(deviceAddress)
+        adb.device(serial=deviceAddress).screenshot().save(img)
+        width, height = Image.open(img).size
+        os.remove(img)
+        adb.device(serial=deviceAddress).click(float((x * width) / 100), float((y * height) / 100))
+        return ()
+    else:
+        return (print("Error this function need coordinates"))
 
-def opponent2():
-    img = ".opponent2.png"
-    adb.connect(deviceAddress)
-    adb.device(serial=deviceAddress).screenshot().save(img)
-    width, height = Image.open(img).size
-    imCrop = Image.open(img).crop(
-        (int(width * 0.62), int(height * 0.66), int(width * 0.82), int(height * 0.84)))
-    imCrop.save(img)
-    ocrStringsFound = easyocr.Reader(['fr']).readtext(img, detail=0)
-    os.remove(img)
-    return (ocrStringsFound)
+def battle():
+    click(buttonSwapOpponent1)
+    click(buttonSwapOpponent2)
 
-if CommonWorkflow.CurrentPage() != "Colisée":
+    if Opponent1.Toughness > Opponent2.Toughness:
+        click(buttonBattleOpponent1)
+
+    else:
+        click(buttonBattleOpponent2)
+
+    time.sleep(2)
+    click(buttonBattleStart)
+    time.sleep(60)
+    for i in range(2):
+        click(buttonEndBattleConfirmRank)
+        time.sleep(2)
+        click(buttonEndBattleConfirm)
+        time.sleep(8)
+class Opponent1:
+    ocrStringsFound = ocrCropGetString(0.62, 0.37, 0.82, 0.54)
+    DPS, Toughness = ocrStringsFound[1], ocrStringsFound[3]
+class Opponent2:
+    ocrStringsFound = ocrCropGetString(0.62, 0.66, 0.82, 0.84)
+    DPS, Toughness = ocrStringsFound[1], ocrStringsFound[-1]
+class Tickets:
+        ocrStringsFound = ocrCropGetString(0.64, 0.87, 0.82, 0.94)
+        remainingTicket = ocrStringsFound[0][0]
+        nextTicketTime = ocrStringsFound[-1]
+
+if model.CommonWorkflow.CurrentPage() != "Colisée":
     print("Error i work only in colosseum")
     exit()
 
-print(opponent1())
-print(opponent2())
+elif int(Tickets.remainingTicket) < 1:
+    print("No ticket found")
+    exit()
+
+battle()

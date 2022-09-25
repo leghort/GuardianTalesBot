@@ -11,13 +11,6 @@ import model.RiftPage
 import model.WorldMapPage
 import model.CommonWorkflow
 
-Common = model.CommonWorkflow
-Achievements= model.Achievements
-ColosseumPage= model.ColosseumPage
-HomePage= model.HomePage
-RiftPage= model.RiftPage
-WorldMapPage= model.WorldMapPage
-
 deviceAddress = "127.0.0.1:5555"
 
 def get_pid(processName):
@@ -153,19 +146,7 @@ def dailymsg():
             adb_tap_string("Recevoir récompenses")
             if len(adb_tap_string("Confirmer")) > 0:
                 adb_tap_string("Confirmer")
-def collisee_V2():
-    adb_tap_string("Aventure")
-    time.sleep(4)
-    if len(adb_tap_string("Colisée")) > 0:
-        adb_tap_string("Colisée")
-        time.sleep(4)
-    adb_tap([1718,478])
-    time.sleep(2)
-    adb_tap_string("Début bataille")
-    if len(adb_tap_string("Confirmer")) > 0:
-        adb_tap_string("Confirmer")
-        time.sleep(4)
-        adb_tap_string("Confirmer")
+
 def daily_V2():
     shop()
     time.sleep(4)
@@ -175,4 +156,4 @@ def daily_V2():
         donjon()
     getQuestReword()
 
-print(ColosseumPage.opponent1())
+model.ColosseumPage
