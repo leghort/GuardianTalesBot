@@ -4,6 +4,8 @@ import psutil
 import easyocr
 from adbutils import adb
 import HomePage
+import RiftPage
+import WorldMapPage
 
 deviceAddress = "127.0.0.1:5555"
 def get_pid(processName):
@@ -160,5 +162,3 @@ def daily_V2():
     for i in range(3):
         donjon()
     getQuestReword()
-
-adb_tap(HomePage.buttonMenu)
