@@ -30,7 +30,8 @@ def AdbClick(x, y, deviceAddress="127.0.0.1:5555"):
         return ()
     else:
         return (print("Error this function need coordinates"))
-def AdbClickString(string, deviceAddress="127.0.0.1:5555"):
+
+def AdbClickString(string):
     if AdbFindStringLocation(string) != False:
         x, y = AdbFindStringLocation(string)
         AdbClick(x, y)
@@ -38,13 +39,25 @@ def AdbClickString(string, deviceAddress="127.0.0.1:5555"):
     else:
         return (False)
 
+def AdbSwipe(x, y, duration, deviceAddress="127.0.0.1:5555"):
+    if x != 0 and y !=0:
+        img = ".ocrCrop.png"
+        adb.connect(deviceAddress)
+        adb.device(deviceAddress).screenshot().save(img)
+        width, height = Image.open(img).size
+        os.remove(img)
+        adb.device(deviceAddress).swipe(float((x * width) / 100), float((y * height) / 100), (x * width) / 100, float((y * height) / 100), duration)
+        return (print(f"Tap in {x, y} for {duration}s"))
+    else:
+        return (print("Error this function need coordinates"))
+
 def AdbFindStringLocation(string, deviceAddress="127.0.0.1:5555"):
     img = ".screencap.png"
     adb.device(deviceAddress).screenshot().save(img)
     width, height = Image.open(img).size
     stringsFound = easyocr.Reader(['fr']).readtext(img)
-    print(stringsFound)
     strMatchList = []
+    print(stringsFound)
     for i in range(0, len(stringsFound)):
         if stringsFound[i][1] == string:
             strMatchList.append(stringsFound[i][0][0])

@@ -42,8 +42,3 @@ def getDailyDonjon():
         time.sleep(1)
         AdbClick(2, 4)
     return ()
-
-
-
-
-
