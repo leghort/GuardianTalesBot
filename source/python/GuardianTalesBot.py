@@ -3,9 +3,9 @@ from homeWorkflow import getDailyShop
 from adventureWorkflow import getDailyDonjon
 from guildWorkflow import getDailyGuild
 
-dailyShop = True
-dailyDongeon = True
-dailyGuild = True
+dailyShop = False
+dailyDongeon = False
+dailyGuild = False
 dailyEvent = False
 dailyFarm = False
 
