@@ -1,0 +1,18 @@
+# Start mumu
+"D:\Program Files\MuMu\emulator\nemu\EmulatorShell\NemuPlayer.exe"
+
+# adb start server
+D:\Program Files\MuMu\emulator\nemu\vmonitor\bin\adb_server.exe
+
+# adb connect to device
+.\adb_server.exe connect 127.0.0.1:7555
+
+# adb liste device
+.\adb_server.exe devices
+
+
+# Guadiant tail app start
+.\adb_server.exe -s 127.0.0.1:7555 shell monkey -p com.kakaogames.gdts 1
+
+# Guadiant tail app stop
+.\adb_server.exe -s 127.0.0.1:7555 shell am force-stop com.kakaogames.gdts
