@@ -1,6 +1,5 @@
 import time
-from commonWorkflow import AdbFindStringLocation, AdbClick, PopUp, AdbSwipe
-from commonWorkflow import AdbClickString
+from commonWorkflow import AdbFindStringLocation, AdbClick, PopUp, AdbSwipe, AdbClickString
 from adbutils import adb
 
 def getDailyGuild():

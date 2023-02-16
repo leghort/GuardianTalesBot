@@ -3,7 +3,7 @@ from PIL import Image
 import easyocr
 from adbutils import adb
 
-def ocrCropGetString(left: float, upper: float, right: float, bottom: float, deviceAddress="127.0.0.1:1324"):
+def ocrCropGetString(left: float, upper: float, right: float, bottom: float, deviceAddress="localhost:7555"):
     img = ".ocrCrop.png"
     adb.device(deviceAddress).screenshot().save(img)
     width, height = Image.open(img).size
@@ -19,7 +19,7 @@ def ocrCropGetString(left: float, upper: float, right: float, bottom: float, dev
     else:
         return ("Error: ocrCropGetString fonction")
 
-def AdbClick(x, y, deviceAddress="127.0.0.1:1324"):
+def AdbClick(x, y, deviceAddress="localhost:7555"):
     if x != 0 and y !=0:
         img = ".ocrCrop.png"
         adb.connect(deviceAddress)
@@ -39,7 +39,7 @@ def AdbClickString(string):
     else:
         return (False)
 
-def AdbSwipe(x, y, duration, deviceAddress="127.0.0.1:1324"):
+def AdbSwipe(x, y, duration, deviceAddress="localhost:7555"):
     if x != 0 and y !=0:
         img = ".ocrCrop.png"
         adb.connect(deviceAddress)
@@ -51,7 +51,7 @@ def AdbSwipe(x, y, duration, deviceAddress="127.0.0.1:1324"):
     else:
         return (print("Error this function need coordinates"))
 
-def AdbFindStringLocation(string, deviceAddress="127.0.0.1:1324"):
+def AdbFindStringLocation(string, deviceAddress="localhost:7555"):
     img = ".screencap.png"
     adb.device(deviceAddress).screenshot().save(img)
     width, height = Image.open(img).size
