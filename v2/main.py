@@ -4,6 +4,7 @@ from stop import stop_guardian_tales
 from aventure import aventure_daily
 from shop import shop_daily, shop_menu
 from guild import guilde_daily
+from utils import search_string_on_screenshot
 
 def create_main_window():
     window = tk.Tk()
@@ -31,6 +32,9 @@ def create_main_window():
 
     test_button = tk.Button(button_frame, text="Shop and stop app", command=lambda: (shop_menu(), stop_guardian_tales()))
     test_button.pack(pady=5)
+
+    magic_button = tk.Button(button_frame, text="magic", command=search_string_on_screenshot(0.4, 0.45, 0.6, 0.5, "Guilde"))
+    magic_button.pack(pady=5)
 
     window.mainloop()
 
