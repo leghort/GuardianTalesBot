@@ -1,10 +1,11 @@
 from subprocess import run
 from time import sleep
 
-ADB_SERVER_PATH = r"D:\Program Files\MuMu\emulator\nemu\vmonitor\bin\adb_server.exe"
+ADB_SERVER_PATH = r"C:\Program Files\MuMu\emulator\nemu\vmonitor\bin\adb_server.exe"
 APP_PACKAGE = "com.kakaogames.gdts"
 
 def connect_to_emulator():
+    command = [ADB_SERVER_PATH, "kill-server"]
     command = [ADB_SERVER_PATH, "connect", "localhost:7555"]
     run(command)
 

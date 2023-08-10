@@ -1,7 +1,7 @@
 from subprocess import run
 from time import sleep
 
-ADB_SERVER_PATH = r"D:\Program Files\MuMu\emulator\nemu\vmonitor\bin\adb_server.exe"
+ADB_SERVER_PATH = r"C:\Program Files\MuMu\emulator\nemu\vmonitor\bin\adb_server.exe"
 
 def tap_screen(x, y):
     command = [ADB_SERVER_PATH, "shell", "input", "tap", str(x), str(y)]

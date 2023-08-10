@@ -17,7 +17,6 @@ def create_main_window():
     launch_button = tk.Button(button_frame, text="Start Guardian Tales", command=lambda: (launch_guardian_tales()))
     launch_button.pack(pady=5)
 
-    # Création du cadre pour les boutons Daily
     frame = tk.Frame(button_frame)
     frame.pack(pady=5)
 
@@ -32,9 +31,6 @@ def create_main_window():
 
     test_button = tk.Button(button_frame, text="Shop and stop app", command=lambda: (shop_menu(), stop_guardian_tales()))
     test_button.pack(pady=5)
-
-    magic_button = tk.Button(button_frame, text="magic", command=search_string_on_screenshot(0.4, 0.45, 0.6, 0.5, "Guilde"))
-    magic_button.pack(pady=5)
 
     window.mainloop()
 

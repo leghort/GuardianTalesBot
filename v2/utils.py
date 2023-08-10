@@ -4,7 +4,7 @@ from easyocr import Reader
 from PIL import Image
 
 
-ADB_SERVER_PATH = r"D:\Program Files\MuMu\emulator\nemu\vmonitor\bin\adb_server.exe"
+ADB_SERVER_PATH = r"C:\Program Files\MuMu\emulator\nemu\vmonitor\bin\adb_server.exe"
 
 def tap_screen(x, y):
     command = [ADB_SERVER_PATH, "shell", "input", "tap", str(x), str(y)]

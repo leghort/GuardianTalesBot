@@ -3,7 +3,7 @@ def runGuradianTales():
     .\adb_server.exe -s localhost:7555 shell monkey -p com.kakaogames.gdts 1
 
 def runMumuAdbServer():
-    cd "D:\Program Files\MuMu\emulator\nemu\vmonitor\bin"
+    cd "C:\Program Files\MuMu\emulator\nemu\vmonitor\bin"
     .\adb_server.exe connect localhost:7555
     # list les device
     .\adb_server.exe devices
